@@ -153,7 +153,7 @@ def fit(epochs, lr, model, train_loader, val_loader, opt_func=torch.optim.SGD):
         # Training Phase
         model.train()
         train_losses = []
-        for batch in tqdm(train_loader):
+        for batch in train_loader:
             loss = model.training_step(batch)
             train_losses.append(loss)
             loss.backward()
@@ -186,7 +186,7 @@ def fit_one_cycle(epochs, max_lr, model, train_loader, val_loader,
         model.train()
         train_losses = []
         lrs = []
-        for batch in tqdm(train_loader):
+        for batch in train_loader:
             loss = model.training_step(batch)
             train_losses.append(loss)
             loss.backward()
