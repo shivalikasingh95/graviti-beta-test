@@ -216,10 +216,10 @@ def fit_one_cycle(epochs, max_lr, model, train_loader, val_loader,
 if __name__ == "__main__":
 
     model_sheet_name = sys.argv[1]
-    epochs = sys.argv[2]
-    BATCH_SIZE = sys.argv[3]
+    epochs = int(sys.argv[2])
+    BATCH_SIZE = int(sys.argv[3])
     ACCESS_KEY = os.environ.get("secret.accesskey")
-    
+
     ws = Workspace(ACCESS_KEY)
     flower_dataset = ws.datasets.get("Beta-Test-1") 
 
