@@ -9,3 +9,7 @@ logging.info(f"Model name: {MODEL_NAME}")
 EPOCHS = sys.argv[2]
 logging.info(f"Epoch: {EPOCHS}")
 print("epcojhs:", EPOCHS)
+print("type epochs:", type(EPOCHS))
+batch = sys.argv[2]
+print("batchsize:", batch)
+print("type batchsize:", type(batch))
