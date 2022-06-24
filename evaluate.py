@@ -1,7 +1,7 @@
 import torch
 import logging
 import os
-
+import sys
 from PIL import Image
 from graviti import DataFrame, Workspace
 from graviti.utility import File
@@ -133,6 +133,7 @@ class ResNet9(ImageClassificationBase):
 if __name__ == "__main__":
 
     ACCESS_KEY = os.environ.get("secret.accesskey")
+    model_sheet_name = sys.argv[1]
     ws = Workspace(ACCESS_KEY)
     flower_model = ws.datasets.get("FLOWERS_MODEL")
 
@@ -143,7 +144,7 @@ if __name__ == "__main__":
 
     test_data = dataset['test_data']
 
-    model_df = flower_model["final_model_2"]
+    model_df = flower_model[model_sheet_name]
     model_file = model_df.loc[0]['model_file']
     print(model_file)
     modelcurr = to_device(ResNet9(3, 5), device)
@@ -174,5 +175,5 @@ if __name__ == "__main__":
         cat_dict = {0:'roses', 1: 'sunflowers', 2: 'daisy', 3: 'dandelions', 4: 'tulips'}
         cat_dict_orig = {'roses': 0, 'sunflowers': 1, 'daisy':2,'dandelion':3, 'tulips':4}
         pred = predict_image(img, modelcurr)
-        print('Label:', cat_dict_orig[label], ', Predicted:', pred )
+        #print('Label:', cat_dict_orig[label], ', Predicted:', pred )
         logging.info(f"Predicted: {pred}")

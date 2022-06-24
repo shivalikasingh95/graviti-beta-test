@@ -1,6 +1,6 @@
 import logging
 import os
-
+import sys
 import torch
 from PIL import Image
 from graviti import DataFrame, Workspace
@@ -214,9 +214,12 @@ def fit_one_cycle(epochs, max_lr, model, train_loader, val_loader,
     return history
 
 if __name__ == "__main__":
-    BATCH_SIZE = 64
-    EPOCHS = 2
+
+    model_sheet_name = sys.argv[1]
+    epochs = sys.argv[2]
+    BATCH_SIZE = sys.argv[3]
     ACCESS_KEY = os.environ.get("secret.accesskey")
+    
     ws = Workspace(ACCESS_KEY)
     flower_dataset = ws.datasets.get("Beta-Test-1") 
 
@@ -253,7 +256,7 @@ if __name__ == "__main__":
 
     logging.info(model)
 
-    epochs = 2
+    
     max_lr = 0.01
     grad_clip = 0.1
     weight_decay = 1e-4
@@ -288,7 +291,8 @@ if __name__ == "__main__":
     }
     data.append(row_data)
 
-    draft["final_model_2"] = DataFrame(data=data, schema=schema) 
+    
+    draft[model_sheet_name] = DataFrame(data=data, schema=schema) 
     draft.upload()
     draft.commit("uploaded flower model file")
     logging.info("Uploaded model!")
