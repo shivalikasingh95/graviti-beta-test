@@ -10,7 +10,7 @@ import graviti.portex as pt
 from torch import nn
 from torch.utils.data import DataLoader, Dataset
 from torchvision import transforms
-from tqdm.notebook import tqdm
+#from tqdm.notebook import tqdm
 import torchvision.transforms as T
 
 
@@ -143,14 +143,16 @@ if __name__ == "__main__":
 
     test_data = dataset['test_data']
 
-    model_df = flower_model["final_model"]
+    model_df = flower_model["final_model_2"]
     model_file = model_df.loc[0]['model_file']
     print(model_file)
     modelcurr = to_device(ResNet9(3, 5), device)
     with open(f"./model_out.pth", "wb") as fp:  # Path where data is stored locally
             fp.write(model_file.open().read())
 
-    modelcurr.load_state_dict(torch.load("model_out.pth", map_location=torch.device("cuda")))
+    
+
+    modelcurr.load_state_dict(torch.load("model_out.pth", map_location=device))
     img_size = 64
     stats = ((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
     transform = T.Compose([T.Resize((img_size, img_size)),

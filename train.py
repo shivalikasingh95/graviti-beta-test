@@ -10,7 +10,7 @@ import graviti.portex as pt
 from torch import nn
 from torch.utils.data import DataLoader, Dataset
 from torchvision import transforms
-from tqdm.notebook import tqdm
+#from tqdm.notebook import tqdm
 import torchvision.transforms as T
 
 
@@ -215,7 +215,7 @@ def fit_one_cycle(epochs, max_lr, model, train_loader, val_loader,
 
 if __name__ == "__main__":
     BATCH_SIZE = 64
-    EPOCHS = 3
+    EPOCHS = 2
     ACCESS_KEY = os.environ.get("secret.accesskey")
     ws = Workspace(ACCESS_KEY)
     flower_dataset = ws.datasets.get("Beta-Test-1") 
@@ -240,8 +240,8 @@ if __name__ == "__main__":
     train_ds = FlowerSegment(flower_dataset, sheet_name="train_data", transform=transform)
     valid_ds = FlowerSegment(flower_dataset, sheet_name="val_data", transform=transform)
     
-    train_dl = DataLoader(train_ds, batch_size=BATCH_SIZE, num_workers=3, pin_memory=True)
-    valid_dl = DataLoader(valid_ds, batch_size=BATCH_SIZE*2, num_workers=3, pin_memory=True)
+    train_dl = DataLoader(train_ds, batch_size=BATCH_SIZE, num_workers=0, pin_memory=True)
+    valid_dl = DataLoader(valid_ds, batch_size=BATCH_SIZE*2, num_workers=0, pin_memory=True)
 
 
     device = get_default_device()
@@ -288,7 +288,7 @@ if __name__ == "__main__":
     }
     data.append(row_data)
 
-    draft["final_model"] = DataFrame(data=data, schema=schema) 
+    draft["final_model_2"] = DataFrame(data=data, schema=schema) 
     draft.upload()
     draft.commit("uploaded flower model file")
     logging.info("Uploaded model!")
